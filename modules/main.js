@@ -6,11 +6,11 @@ import {
 } from "./base64-arraybuffer-source-code.js";
 
 document.getElementById("main")?.addEventListener("click", () => {
-  main();
+  handleClick();
 });
 
 /** main */
-function main() {
+function handleClick() {
   const arr = randomUint8Array();
   // console.log("arr:", arr);
   console.log("buffer length:", arr.length);
