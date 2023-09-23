@@ -18,11 +18,10 @@ export function compare2buffer(buffer1, buffer2) {
   const arr1 = new Uint8Array(buffer1);
   const arr2 = new Uint8Array(buffer2);
   console.info(`arr1 length ${arr1.length} arr2 length ${arr2.length}`);
-  if (arr1.length !== arr2.length) return false;
   for (let index in arr1) {
     if (arr1[index] !== arr2[index]) {
       console.error(
-        `arr1 length ${arr1.length} arr2 length ${arr2.length} first unequal at length ${index}`
+        `arr1 length ${arr1.length}, arr2 length ${arr2.length}, first unequal at length ${index}`
       );
       return false;
     }

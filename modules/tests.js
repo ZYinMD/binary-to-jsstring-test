@@ -60,7 +60,7 @@ export function testBase64(buffer) {
   console.timeEnd("convert to base64");
 
   console.log("base64string.length:", result.length);
-  if (result.length < 100) console.log("base64:", result);
+  if (result.length < 200) console.log("base64:", result);
 
   console.time("decode base64");
   const backFromBase64 = new Uint8Array(decodeBase64(result));
