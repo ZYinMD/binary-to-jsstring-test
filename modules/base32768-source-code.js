@@ -33,7 +33,7 @@ pairStrings.forEach((pairString, r) => {
   });
 });
 
-const encode = (uint8Array) => {
+const encodeBase32768 = (uint8Array) => {
   const length = uint8Array.length;
 
   let str = "";
@@ -90,7 +90,7 @@ const encode = (uint8Array) => {
   return str;
 };
 
-const decode = (str) => {
+const decodeBase32768 = (str) => {
   const length = str.length;
 
   // This length is a guess. There's a chance we allocate one more byte here
@@ -143,4 +143,4 @@ const decode = (str) => {
   return new Uint8Array(uint8Array.buffer, 0, numUint8s);
 };
 
-export { encode, decode };
+export { decodeBase32768, encodeBase32768 };

@@ -10,8 +10,13 @@ export function randomUint8Array() {
   return new Uint8Array(randomInteger(200)).map(() => randomInteger(256));
 }
 
-/** compare2Uint8Array */
-export function compare2Uint8Array(arr1, arr2) {
+/** compare two buffers to see if they're the same
+ * @param {ArrayBufferLike} buffer1
+ * @param {ArrayBufferLike} buffer2
+ */
+export function compare2buffer(buffer1, buffer2) {
+  const arr1 = new Uint8Array(buffer1);
+  const arr2 = new Uint8Array(buffer2);
   console.info(`arr1 length ${arr1.length} arr2 length ${arr2.length}`);
   if (arr1.length !== arr2.length) return false;
   for (let index in arr1) {
