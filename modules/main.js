@@ -1,3 +1,5 @@
-import { oneRandomNumber } from "./utils.js";
+import { randomUint8Array } from "./utils.js";
 
-console.log(oneRandomNumber());
+const arr = randomUint8Array();
+
+console.log("arr.length:", arr.length);

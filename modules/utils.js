@@ -1,4 +1,11 @@
-/** create a random integer between 0 and 1M, e.g. 817364 */
-export function oneRandomNumber() {
-  return Math.trunc(Math.random() * 1e6);
+/** create a random number
+ * @param {number} ceiling - the result will be smaller than this
+ */
+export function randomInteger(ceiling) {
+  return Math.trunc(Math.random() * ceiling);
+}
+
+/** create a random length (up to 10M) Uint8Array containing random bytes. */
+export function randomUint8Array() {
+  return new Uint8Array(randomInteger(100)).map(() => randomInteger(256));
 }
