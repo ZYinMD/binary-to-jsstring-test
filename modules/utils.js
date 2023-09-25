@@ -7,7 +7,7 @@ export function randomInteger(ceiling) {
 
 /** create a random length (up to 10M) Uint8Array containing random bytes. */
 export function randomUint8Array() {
-  return new Uint8Array(randomInteger(200)).map(() => randomInteger(256));
+  return new Uint8Array(randomInteger(10e6)).map(() => randomInteger(256));
 }
 
 /** compare two buffers to see if they're the same

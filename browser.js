@@ -7,6 +7,7 @@ document.getElementById("main")?.addEventListener("click", () => {
 
 /** main */
 function handleClick() {
+  // const arr = new Uint8Array([1, 10, 100, 110, 130, 111]);
   const arr = randomUint8Array();
   testUtf8(arr.buffer);
   testBase32768(arr.buffer);

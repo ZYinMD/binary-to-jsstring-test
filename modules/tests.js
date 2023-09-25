@@ -6,6 +6,7 @@ import {
 import { compare2buffer } from "./utils.js";
 
 /** test converting arraybuffer to utf8, then back, see if it reverses correctly
+ * from trial and error I found that the test will fail as long as the array contains any byte bigger than 127
  * @param {ArrayBuffer} buffer
  * @returns {string} the utf8 string constructed
  */
