@@ -1,2 +1,2 @@
 # nodejs output txts
-*.txt
+/input-and-outputs/

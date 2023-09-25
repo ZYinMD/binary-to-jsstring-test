@@ -9,8 +9,8 @@ const BITS_PER_CHAR = 15; // Base32768 is a 15-bit encoding
 const BITS_PER_BYTE = 8;
 
 const pairStrings = [
-  "ҠҿԀԟڀڿݠޟ߀ߟကဟႠႿᄀᅟᆀᆟᇠሿበቿዠዿጠጿᎠᏟᐠᙟᚠᛟកសᠠᡟᣀᣟᦀᦟ᧠᧿ᨠᨿᯀᯟᰀᰟᴀᴟ⇠⇿⋀⋟⍀⏟␀␟─❟➀➿⠀⥿⦠⦿⨠⩟⪀⪿⫠⭟ⰀⰟⲀⳟⴀⴟⵀⵟ⺠⻟㇀㇟㐀䶟䷀龿ꀀꑿ꒠꒿ꔀꗿꙀꙟꚠꛟ꜀ꝟꞀꞟꡀꡟ",
-  "ƀƟɀʟ",
+  'ҠҿԀԟڀڿݠޟ߀ߟကဟႠႿᄀᅟᆀᆟᇠሿበቿዠዿጠጿᎠᏟᐠᙟᚠᛟកសᠠᡟᣀᣟᦀᦟ᧠᧿ᨠᨿᯀᯟᰀᰟᴀᴟ⇠⇿⋀⋟⍀⏟␀␟─❟➀➿⠀⥿⦠⦿⨠⩟⪀⪿⫠⭟ⰀⰟⲀⳟⴀⴟⵀⵟ⺠⻟㇀㇟㐀䶟䷀龿ꀀꑿ꒠꒿ꔀꗿꙀꙟꚠꛟ꜀ꝟꞀꞟꡀꡟ',
+  'ƀƟɀʟ',
 ];
 
 const lookupE = {};
@@ -36,7 +36,7 @@ pairStrings.forEach((pairString, r) => {
 const encodeBase32768 = (uint8Array) => {
   const length = uint8Array.length;
 
-  let str = "";
+  let str = '';
   let z = 0;
   let numZBits = 0;
 
@@ -95,9 +95,7 @@ const decodeBase32768 = (str) => {
 
   // This length is a guess. There's a chance we allocate one more byte here
   // than we actually need. But we can count and slice it off later
-  const uint8Array = new Uint8Array(
-    Math.floor((length * BITS_PER_CHAR) / BITS_PER_BYTE)
-  );
+  const uint8Array = new Uint8Array(Math.floor((length * BITS_PER_CHAR) / BITS_PER_BYTE));
   let numUint8s = 0;
   let uint8 = 0;
   let numUint8Bits = 0;
@@ -112,9 +110,7 @@ const decodeBase32768 = (str) => {
     const [numZBits, z] = lookupD[chr];
 
     if (numZBits !== BITS_PER_CHAR && i !== length - 1) {
-      throw new Error(
-        "Secondary character found before end of input at position " + String(i)
-      );
+      throw new Error('Secondary character found before end of input at position ' + String(i));
     }
 
     // Take most significant bit first
@@ -137,7 +133,7 @@ const decodeBase32768 = (str) => {
   // Remember how we always pad with 1s?
   // Note: there could be 0 such bits, check still works though
   if (uint8 !== (1 << numUint8Bits) - 1) {
-    throw new Error("Padding mismatch");
+    throw new Error('Padding mismatch');
   }
 
   return new Uint8Array(uint8Array.buffer, 0, numUint8s);
