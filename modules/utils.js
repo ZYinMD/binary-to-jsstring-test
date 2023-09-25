@@ -9,7 +9,7 @@ export function randomInteger(ceiling) {
 export function randomUint8Array() {
   const result = new Uint8Array(randomInteger(10e6)).map(() => randomInteger(256));
   const mb = (result.length / 1024 / 1024).toFixed(1);
-  console.log(`created random Uint8Array of ${mb}MB`);
+  console.log(`created random Uint8Array of ${mb}MB for testing`);
   console.log('');
   return result;
 }

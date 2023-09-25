@@ -1,7 +1,7 @@
 import { testBase32768, testBase64, testUtf8 } from './modules/tests.js';
 import { randomUint8Array } from './modules/utils.js';
 
-document.getElementById('main')?.addEventListener('click', () => {
+document.getElementById('test-encoding')?.addEventListener('click', () => {
   handleClick();
 });
 
