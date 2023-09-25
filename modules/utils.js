@@ -32,19 +32,31 @@ export function areEqual(buffer1, buffer2) {
   return true;
 }
 
-export function compress(string, encoding) {
+/**
+ * zip string to bytes
+ * @param {string} string
+ * @param {'gzip'|'deflate'} algorithm
+ * @returns {ArrayBuffer}
+ */
+export function compress(string, algorithm) {
   const byteArray = new TextEncoder().encode(string);
-  const cs = new CompressionStream(encoding);
+  const cs = new CompressionStream(algorithm);
   const writer = cs.writable.getWriter();
   writer.write(byteArray);
   writer.close();
   return new Response(cs.readable).arrayBuffer();
 }
 
-function decompress(byteArray, algorithm) {
+/**
+ * unzip compressed bytes to string
+ * @param {Uint8Array} bytes
+ * @param {'gzip'|'deflate'} algorithm
+ * @returns {string}
+ */
+export function decompress(bytes, algorithm) {
   const cs = new DecompressionStream(algorithm);
   const writer = cs.writable.getWriter();
-  writer.write(byteArray);
+  writer.write(bytes);
   writer.close();
   return new Response(cs.readable).arrayBuffer().then((arrayBuffer) => {
     return new TextDecoder().decode(arrayBuffer);
@@ -57,17 +69,13 @@ function decompress(byteArray, algorithm) {
  */
 export async function testCompression(text, algorithm) {
   console.time(`compress with ${algorithm}`);
-  const compressedData = await compress(text, algorithm);
+  const compressed = await compress(text, algorithm);
   console.timeEnd(`compress with ${algorithm}`);
-  console.log('result:', compressedData.byteLength, 'bytes');
+  console.log('result:', compressed.byteLength, 'bytes');
 
   console.time(`decompress with ${algorithm}`);
-  const decompressedText = await decompress(compressedData, algorithm);
+  const decompressedText = await decompress(new Uint8Array(compressed), algorithm);
   console.timeEnd(`decompress with ${algorithm}`);
   console.assert(text === decompressedText);
+  return compressed;
 }
-
-// (async function () {
-//   await testCompression(test, 'deflate');
-//   await testCompression(test, 'gzip');
-// })();
