@@ -3,7 +3,7 @@ import {
   decodeBase64,
   encodeBase64,
 } from "./base64-arraybuffer-source-code.js";
-import { compare2buffer } from "./utils.js";
+import { areEqual } from "./utils.js";
 
 /** test converting arraybuffer to utf8, then back, see if it reverses correctly
  * from trial and error I found that the test will fail as long as the array contains any byte bigger than 127
@@ -22,7 +22,7 @@ export function testUtf8(buffer) {
   const backFromUtf8 = new TextEncoder().encode(result);
   console.timeEnd("decode utf8");
 
-  if (!compare2buffer(buffer, backFromUtf8)) {
+  if (!areEqual(buffer, backFromUtf8)) {
     console.error("utf8 doesn't reverse correctly");
   }
   return result;
@@ -45,7 +45,7 @@ export function testBase32768(buffer) {
   const backFromBase32768 = decodeBase32768(result);
   console.timeEnd("decode base32768");
 
-  if (!compare2buffer(buffer, backFromBase32768)) {
+  if (!areEqual(buffer, backFromBase32768)) {
     console.error("base32768 doesn't reverse correctly");
   }
   return result;
@@ -67,7 +67,7 @@ export function testBase64(buffer) {
   const backFromBase64 = new Uint8Array(decodeBase64(result));
   console.timeEnd("decode base64");
 
-  if (!compare2buffer(buffer, backFromBase64)) {
+  if (!areEqual(buffer, backFromBase64)) {
     console.error("base64 doesn't reverse correctly");
   }
   return result;

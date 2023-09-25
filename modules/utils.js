@@ -14,7 +14,7 @@ export function randomUint8Array() {
  * @param {ArrayBufferLike} buffer1
  * @param {ArrayBufferLike} buffer2
  */
-export function compare2buffer(buffer1, buffer2) {
+export function areEqual(buffer1, buffer2) {
   const arr1 = new Uint8Array(buffer1);
   const arr2 = new Uint8Array(buffer2);
   console.info(`arr1 length ${arr1.length} arr2 length ${arr2.length}`);
