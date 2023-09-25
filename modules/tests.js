@@ -12,8 +12,7 @@ export function testUtf8(buffer) {
   const result = new TextDecoder().decode(buffer);
   console.timeEnd('convert to utf8');
 
-  console.log('result length:', result.length);
-  if (result.length < 200) console.log('result:', result);
+  if (result.length < 300) console.log('result:', result);
 
   console.time('decode utf8');
   const backFromUtf8 = new TextEncoder().encode(result);
@@ -22,6 +21,7 @@ export function testUtf8(buffer) {
   if (!areEqual(buffer, backFromUtf8)) {
     console.error("utf8 doesn't reverse correctly");
   }
+  console.log('\n');
   return result;
 }
 
@@ -30,13 +30,12 @@ export function testUtf8(buffer) {
  * @returns {string} the base32768 string constructed
  */
 export function testBase32768(buffer) {
-  console.time('to base32768');
+  console.time('convert to base32768');
   const arr = new Uint8Array(buffer);
   const result = encodeBase32768(arr);
-  console.timeEnd('to base32768');
+  console.timeEnd('convert to base32768');
 
-  console.log('base32768string.length:', result.length);
-  if (result.length < 200) console.log('base32768:', result);
+  if (result.length < 300) console.log('base32768:', result);
 
   console.time('decode base32768');
   const backFromBase32768 = decodeBase32768(result);
@@ -45,6 +44,7 @@ export function testBase32768(buffer) {
   if (!areEqual(buffer, backFromBase32768)) {
     console.error("base32768 doesn't reverse correctly");
   }
+  console.log('\n');
   return result;
 }
 
@@ -57,8 +57,7 @@ export function testBase64(buffer) {
   const result = encodeBase64(buffer);
   console.timeEnd('convert to base64');
 
-  console.log('base64string.length:', result.length);
-  if (result.length < 200) console.log('base64:', result);
+  if (result.length < 300) console.log('base64:', result);
 
   console.time('decode base64');
   const backFromBase64 = new Uint8Array(decodeBase64(result));
@@ -67,5 +66,6 @@ export function testBase64(buffer) {
   if (!areEqual(buffer, backFromBase64)) {
     console.error("base64 doesn't reverse correctly");
   }
+  console.log('\n');
   return result;
 }
