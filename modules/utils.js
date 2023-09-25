@@ -31,3 +31,43 @@ export function areEqual(buffer1, buffer2) {
   }
   return true;
 }
+
+export function compress(string, encoding) {
+  const byteArray = new TextEncoder().encode(string);
+  const cs = new CompressionStream(encoding);
+  const writer = cs.writable.getWriter();
+  writer.write(byteArray);
+  writer.close();
+  return new Response(cs.readable).arrayBuffer();
+}
+
+function decompress(byteArray, algorithm) {
+  const cs = new DecompressionStream(algorithm);
+  const writer = cs.writable.getWriter();
+  writer.write(byteArray);
+  writer.close();
+  return new Response(cs.readable).arrayBuffer().then((arrayBuffer) => {
+    return new TextDecoder().decode(arrayBuffer);
+  });
+}
+
+/**
+ * @param {string} text
+ * @param {'gzip'|'deflate'} algorithm
+ */
+export async function testCompression(text, algorithm) {
+  console.time(`compress with ${algorithm}`);
+  const compressedData = await compress(text, algorithm);
+  console.timeEnd(`compress with ${algorithm}`);
+  console.log('result:', compressedData.byteLength, 'bytes');
+
+  console.time(`decompress with ${algorithm}`);
+  const decompressedText = await decompress(compressedData, algorithm);
+  console.timeEnd(`decompress with ${algorithm}`);
+  console.assert(text === decompressedText);
+}
+
+// (async function () {
+//   await testCompression(test, 'deflate');
+//   await testCompression(test, 'gzip');
+// })();
