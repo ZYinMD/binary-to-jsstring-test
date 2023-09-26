@@ -26,11 +26,13 @@ document.querySelector('button#test-converting-binary-to-string')?.addEventListe
   testBase64(arr.buffer);
 });
 
-document.querySelector('button#array-buffer-to-base64')?.addEventListener('click', async () => {
-  const arr = new Uint8Array([1, 10, 100, 200]);
-  const base64 = await arrayBufferToBase64(arr.buffer);
-  const back = await base64ToArrayBuffer(base64);
-  const success = areEqual(back, arr.buffer);
-  if (!success) throw 'changed array buffer to base64 and back, result is different from input';
-  console.info('Success!\n');
-});
+document
+  .querySelector('button#array-buffer-to-base64-and-back')
+  ?.addEventListener('click', async () => {
+    const arr = new Uint8Array([1, 10, 100, 200]);
+    const base64 = await arrayBufferToBase64(arr.buffer);
+    const back = await base64ToArrayBuffer(base64);
+    const success = areEqual(back, arr.buffer);
+    if (!success) throw 'changed array buffer to base64 and back, result is different from input';
+    console.info('Success!\n');
+  });
