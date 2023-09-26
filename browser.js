@@ -40,7 +40,7 @@ document
 
 document.querySelector('button#compare-base64-performance')?.addEventListener('click', async () => {
   console.log('\nCompare performance of two base64 encoding methods - npm vs native\n');
-  const buffer = randomUint8Array(1e7).buffer;
+  const buffer = randomUint8Array(3e6).buffer;
 
   console.time('use npm to convert to base64');
   const base64_npm = encodeBase64(buffer);
@@ -58,6 +58,13 @@ document.querySelector('button#compare-base64-performance')?.addEventListener('c
   console.timeEnd('use fetch to convert back');
   if (!areEqual(back_native, buffer)) console.error("fileReader base64 doesn't reverse correctly");
 
-  if (base64_npm === base64_native) console.info('the two methods produce the same base64 string');
-  else console.error('the two methods produce different base64 string');
+  if (base64_npm === base64_native) console.info('npm and native produce the same base64 string');
+  else console.error('npm and native produce different base64 string');
+
+  // btoa can't handle big buffers, so we only test the converting back:
+  console.time('use atob to convert back');
+  const binString = atob(base64_native);
+  const back_atob = Uint8Array.from(binString, (m) => m.codePointAt(0)).buffer;
+  console.timeEnd('use atob to convert back');
+  if (!areEqual(back_atob, buffer)) console.error("atob doesn't reverse correctly");
 });
