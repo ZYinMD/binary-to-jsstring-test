@@ -5,9 +5,11 @@ export function randomInteger(ceiling) {
   return Math.trunc(Math.random() * ceiling);
 }
 
-/** create a random length (up to 10M) Uint8Array containing random bytes. */
-export function randomUint8Array() {
-  const result = new Uint8Array(randomInteger(10e6)).map(() => randomInteger(256));
+/** create Uint8Array containing random bytes.
+ * @param {number} length - how many bytes in the array
+ */
+export function randomUint8Array(length) {
+  const result = new Uint8Array(length).map(() => randomInteger(256));
   const mb = (result.length / 1024 / 1024).toFixed(1);
   console.log(`created random Uint8Array of ${mb}MB for testing`);
   console.log('');

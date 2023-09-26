@@ -5,7 +5,7 @@ import { areEqual, decompress, randomUint8Array, testCompression } from './modul
 import { decodeBase64 } from './modules/base64-arraybuffer-source-code.js';
 
 console.info(`\nCreate a random content arrayBuffer and test converting it to string...\n`);
-const arr = randomUint8Array();
+const arr = randomUint8Array(1e7);
 await fs.writeFile('input-and-outputs/binary-to-utf8.txt', testUtf8(arr.buffer));
 await fs.writeFile('input-and-outputs/binary-to-base64.txt', testBase64(arr.buffer));
 await fs.writeFile('input-and-outputs/binary-to-base32768.txt', testBase32768(arr.buffer));
