@@ -6,8 +6,21 @@
     <title>binary-to-string-test</title>
     <script type="module" src="browser.js"></script>
   </head>
+  <style>
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+    }
+    button {
+      margin: 3px;
+    }
+  </style>
   <body>
-    <button id="test-compress-string-to-binary">test compressing string to binary</button>
-    <button id="test-converting-binary-to-string">test converting binary to string</button>
+    <div class="buttons">
+      <button id="test-compress-string-to-binary">test compressing string to binary</button>
+      <button id="test-converting-binary-to-string">test converting binary to string</button>
+      <button id="array-buffer-to-base64">arrayBuffer to base64</button>
+    </div>
   </body>
 </html>

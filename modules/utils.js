@@ -79,3 +79,30 @@ export async function testCompression(text, algorithm) {
   console.assert(text === decompressedText);
   return compressed;
 }
+
+/**
+ * @param {ArrayBuffer} buffer
+ * @returns {Promise<string>}
+ */
+export async function arrayBufferToBase64(buffer) {
+  try {
+    const file = new File([buffer], 'temp.bin', { type: 'application/octet-stream' });
+    const fileReader = new FileReader();
+    const dataUrl = await new Promise((resolve, reject) => {
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.onerror = () => reject(fileReader.error);
+      fileReader.readAsDataURL(file);
+    }); // something like `data:application/octet-stream;base64,AQpy3Es9Ja0Abb=`
+    return dataUrl.split('base64,')[1];
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+/**
+ * @param {string} base64string
+ */
+export async function base64ToArrayBuffer(base64string) {
+  const res = await fetch(`data:application/octet-stream;base64,${base64string}`);
+  return await res.arrayBuffer();
+}
