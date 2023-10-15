@@ -1,27 +1,28 @@
-import { dbv } from './input-and-outputs/dbv.js';
-import { dbvd } from './input-and-outputs/dbvd.js';
+import { dbv } from './input-and-outputs/dbv_douzhencang.js';
+import { dbvd } from './input-and-outputs/dbvd_douzhencang.js';
 import { decodeBase64, encodeBase64 } from './modules/base64-arraybuffer-source-code.js';
-import { testBase32768, testBase64, testUtf8 } from './modules/tests.js';
+import { testBase32768, testBase64, testCompression, testUtf8 } from './modules/tests.js';
 import {
   areEqual,
   arrayBufferToBase64,
   base64ToArrayBuffer,
   randomUint8Array,
-  testCompression,
 } from './modules/utils.js';
 
 document
   .querySelector('button#test-compress-string-to-binary')
   ?.addEventListener('click', async () => {
+    console.log('testing dbv:');
     await testCompression(dbv, 'deflate');
     await testCompression(dbv, 'gzip');
+
+    console.log('testing dbvd:');
     await testCompression(dbvd, 'deflate');
     await testCompression(dbvd, 'gzip');
   });
 
 document.querySelector('button#test-converting-binary-to-string')?.addEventListener('click', () => {
-  // const arr = new Uint8Array([1, 10, 100, 110, 130, 111]);
-  const arr = randomUint8Array(1e7);
+  const arr = randomUint8Array(200); // a random array of 10MB
   testUtf8(arr.buffer);
   testBase32768(arr.buffer);
   testBase64(arr.buffer);
