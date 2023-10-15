@@ -65,24 +65,7 @@ export function decompress(bytes, algorithm) {
   });
 }
 
-/**
- * @param {string} text
- * @param {'gzip'|'deflate'} algorithm
- */
-export async function testCompression(text, algorithm) {
-  console.time(`compress with ${algorithm}`);
-  const compressed = await compress(text, algorithm);
-  console.timeEnd(`compress with ${algorithm}`);
-  console.log('result:', compressed.byteLength, 'bytes');
-
-  console.time(`decompress with ${algorithm}`);
-  const decompressedText = await decompress(new Uint8Array(compressed), algorithm);
-  console.timeEnd(`decompress with ${algorithm}`);
-  console.assert(text === decompressedText);
-  return compressed;
-}
-
-/**
+/** convert arrayBuffer to base64 using the fileReader API, which is the most performant way according to my test.
  * @param {ArrayBuffer} buffer
  * @returns {Promise<string>}
  */
@@ -101,7 +84,7 @@ export async function arrayBufferToBase64(buffer) {
   }
 }
 
-/**
+/** convert base64 string to arrayBuffer using fetch API, which is not the most performant
  * @param {string} base64string
  */
 export async function base64ToArrayBuffer(base64string) {

@@ -1,6 +1,24 @@
 import { decodeBase32768, encodeBase32768 } from './base32768-source-code.js';
 import { decodeBase64, encodeBase64 } from './base64-arraybuffer-source-code.js';
-import { areEqual } from './utils.js';
+import { areEqual, compress, decompress } from './utils.js';
+
+/**
+ * compress then reverse the input text to arrayBuffer using either gzip or deflate, assert it's the same as original,  output the time taken using console.time()
+ * @param {string} text the input text
+ * @param {'gzip'|'deflate'} algorithm
+ */
+export async function testCompression(text, algorithm) {
+  console.time(`compress with ${algorithm}`);
+  const compressed = await compress(text, algorithm);
+  console.timeEnd(`compress with ${algorithm}`);
+  console.log('result:', compressed.byteLength, 'bytes');
+
+  console.time(`decompress with ${algorithm}`);
+  const decompressedText = await decompress(new Uint8Array(compressed), algorithm);
+  console.timeEnd(`decompress with ${algorithm}`);
+  console.assert(text === decompressedText);
+  return compressed;
+}
 
 /** test converting arraybuffer to utf8, then back, see if it reverses correctly
  * from trial and error I found that the test will fail as long as the array contains any byte bigger than 127
