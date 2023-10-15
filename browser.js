@@ -28,20 +28,9 @@ document.querySelector('button#test-converting-binary-to-string')?.addEventListe
   testBase64(arr.buffer);
 });
 
-document
-  .querySelector('button#array-buffer-to-base64-and-back')
-  ?.addEventListener('click', async () => {
-    const arr = new Uint8Array([1, 10, 100, 200]);
-    const base64 = await arrayBufferToBase64(arr.buffer);
-    const back = await base64ToArrayBuffer(base64);
-    const success = areEqual(back, arr.buffer);
-    if (!success) throw 'changed array buffer to base64 and back, result is different from input';
-    console.info('Success!\n');
-  });
-
 document.querySelector('button#compare-base64-performance')?.addEventListener('click', async () => {
-  console.log('\nCompare performance of two base64 encoding methods - npm vs native\n');
-  const buffer = randomUint8Array(3e6).buffer;
+  console.log('\nCompare performance of 3 base64 encoding methods\n');
+  const buffer = randomUint8Array(5e6).buffer;
 
   console.time('use npm to convert to base64');
   const base64_npm = encodeBase64(buffer);
@@ -62,7 +51,7 @@ document.querySelector('button#compare-base64-performance')?.addEventListener('c
   if (base64_npm === base64_native) console.info('npm and native produce the same base64 string');
   else console.error('npm and native produce different base64 string');
 
-  // btoa can't handle big buffers, so we only test the converting back:
+  console.log(`btoa can't handle big buffers, so we only test the converting back:`);
   console.time('use atob to convert back');
   const binString = atob(base64_native);
   const back_atob = Uint8Array.from(binString, (m) => m.codePointAt(0)).buffer;
